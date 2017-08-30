@@ -1,0 +1,6 @@
+FROM fedora:22
+
+RUN dnf install -y tmux git tar
+
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+

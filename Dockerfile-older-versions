@@ -1,0 +1,28 @@
+FROM debian:unstable
+
+RUN apt-get update && apt-get install -y \
+        git \
+        curl \
+        build-essential \
+        make \
+        autoconf \
+        automake \
+        pkg-config \
+        libevent-dev \
+        locales \
+        libncurses-dev
+
+RUN git clone https://github.com/tmux/tmux.git
+RUN cd tmux && \
+        git checkout 2.2 && \
+        sh autogen.sh && \
+        ./configure && \
+        make && \
+        cp /tmux/tmux /usr/local/bin
+
+RUN echo en_US.UTF-8 UTF-8 >> /etc/locale.gen && locale-gen
+
+RUN git clone https://github.com/junegunn/fzf.git ~/.fzf && \
+        cd ~/.fzf/ && \
+        git checkout 0.15.9 && \
+        ~/.fzf/install
